@@ -5,6 +5,7 @@ import com.example.core.events.EventModel;
 import com.example.core.exceptions.AggregateNotFoundException;
 import com.example.core.exceptions.ConcurrencyException;
 import com.example.core.infrastructure.EventStore;
+import com.example.core.producers.EventProducer;
 import com.techbank.domain.AccountAggregate;
 import com.techbank.domain.EventStoreRepository;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,11 @@ public class AccountEventStore implements EventStore {
 
     private final EventStoreRepository eventStoreRepository;
 
-    public AccountEventStore(EventStoreRepository eventStoreRepository) {
+    private final EventProducer eventProducer;
+
+    public AccountEventStore(EventStoreRepository eventStoreRepository, EventProducer eventProducer) {
         this.eventStoreRepository = eventStoreRepository;
+        this.eventProducer = eventProducer;
     }
 
     @Override
@@ -44,8 +48,8 @@ public class AccountEventStore implements EventStore {
 
             EventModel persistedEvent = eventStoreRepository.save(eventModel);
 
-            if(persistedEvent != null) {
-                // TODO: produce event to kafka
+            if(!persistedEvent.getId().isEmpty()) {
+                eventProducer.produce(event.getClass().getSimpleName(), event);
             }
         }
 

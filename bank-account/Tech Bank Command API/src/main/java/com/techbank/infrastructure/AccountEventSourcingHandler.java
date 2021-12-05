@@ -2,7 +2,6 @@ package com.techbank.infrastructure;
 
 import com.example.core.domain.AggregateRoot;
 import com.example.core.events.BaseEvent;
-import com.example.core.events.EventModel;
 import com.example.core.handlers.EventSourcingHandler;
 import com.example.core.infrastructure.EventStore;
 import com.techbank.domain.AccountAggregate;

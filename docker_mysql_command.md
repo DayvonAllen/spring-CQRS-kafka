@@ -1,5 +1,5 @@
 ## MySQL
-- `docker run -it -d --name mysql-container -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password --restart always -v mysql_data_container:/var/lib/mysql mysql:latest`
+- `docker run -it -d --name mysql-container --platform linux/x86_64 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password --restart always -v mysql_data_container:/var/lib/mysql mysql:latest`
 ---
 
 ## Adminer(MySQL Client tools)
